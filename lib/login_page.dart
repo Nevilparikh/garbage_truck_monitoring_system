@@ -54,7 +54,7 @@ class _UserLoginState extends State<UserLogin> with SingleTickerProviderStateMix
   Future<List> _login() async{
     print("HII i am going in");
     final response = await http.post("https://truckmonitoring.000webhostapp.com/", body:{
-    //final response = await http.post('http://10.0.2.2/login.php', body:{
+      //final response = await http.post('http://10.0.2.2/login.php', body:{
       "username": user.text,
       "password": pass.text,
     },
@@ -67,7 +67,7 @@ class _UserLoginState extends State<UserLogin> with SingleTickerProviderStateMix
       print("Hi");
       setState(() {
         msg="Login Failed";
-        Future.delayed(Duration(seconds: 3), () {
+        Future.delayed(Duration(seconds: 1), () {
           return Navigator.pushReplacementNamed(context, '/login');
         });
       });
@@ -95,9 +95,9 @@ class _UserLoginState extends State<UserLogin> with SingleTickerProviderStateMix
         Navigator.pushReplacementNamed(context, '/home');
       }
       setState(() {
-          username= datauser[0]['name'];
-          mobile= datauser[0]['mobile_no'];
-          level= datauser[0]['level'];
+        username= datauser[0]['name'];
+        mobile= datauser[0]['mobile_no'];
+        level= datauser[0]['level'];
       });
     }
     return datauser;
@@ -181,17 +181,17 @@ class _UserLoginState extends State<UserLogin> with SingleTickerProviderStateMix
                   SizedBox(height: 40,),
                   Container(
                     child: RaisedButton(
-                        child: Text("LOGIN"),
-                        onPressed: (){
-                          _onLoading();
-                        },
-                  ),
+                      child: Text("LOGIN"),
+                      onPressed: (){
+                        _onLoading();
+                      },
+                    ),
                   ),
                   SizedBox(height: 20,),
                   Container(
                     child: Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),),
                   ),
-                  SizedBox(height: 20,),
+                  /*SizedBox(height: 20,),
                   Container(
                       child: Row(
                         children: <Widget>[
@@ -208,7 +208,7 @@ class _UserLoginState extends State<UserLogin> with SingleTickerProviderStateMix
                           )
                         ],
                         mainAxisAlignment: MainAxisAlignment.center,
-                      ))
+                      ))*/
                   /*SizedBox(
                     height: 100,
                   ),

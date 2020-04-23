@@ -1,4 +1,4 @@
-name: flutter_app1
+name: flutter_app2
 description: A new Flutter application.
 
 # The following defines the version and build number for your application.
@@ -14,18 +14,27 @@ description: A new Flutter application.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   http : ^0.12.0+2
   flutter:
     sdk: flutter
+  cupertino_icons: ^0.1.2
   flutter_screenutil: ^0.5.2
   flutter_form_builder: ^3.4.1
-  cupertino_icons: ^0.1.2
   zoomable_image: any
   photo_view: any
   rflutter_alert: ^1.0.3
+  flutter_map:
+  google_maps_flutter:
+  location:
+    #git:
+      #url: git://github.com/flutter/plugins
+      #path: packages/google_maps_flutter
+  permission_handler:
+
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
 
@@ -33,6 +42,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
 
 # For information on the generic Dart part of this file, see the

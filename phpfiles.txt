@@ -1,0 +1,221 @@
+conn
+<?php
+
+$connect = new mysqli("localhost","id12584282_truck","truck","id12584282_truck");
+
+if(!$connect){
+	echo "Not connected";
+}
+
+?>
+----------------------------------------------------------
+verification(index.php)
+
+<?php
+
+include 'conn.php';
+
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+//if($q_result=$connect -> query("SELECT * FROM admin Where username='".$username."' and password='".$password."'"))
+$q_result=$connect -> query("SELECT * FROM admin Where name='".$username."' and password='".$password."'");
+
+//$fetchData=$q_result -> fetch_assoc();
+//else{
+//	$fetchData=array();
+//}
+$result=array();
+
+while ($fetchData=$q_result -> fetch_assoc()) {
+	$result[]=$fetchData;
+}
+
+echo json_encode($result);
+?>
+------------------------------------------------------------------
+registration
+
+<?php
+include 'conn.php';
+/*
+$Name = "1";
+$Address = "2";
+$Mobile = "3";
+$email = "4";
+$password = "5";
+$type = "6";
+*/
+$Name = $_POST['user'];
+$Address = $_POST['address'];
+$Mobile = $_POST['mob'];
+$password = $_POST['pass'];
+//echo $Name.$Address.$Mobile.$email.$password.$type;
+
+$CheckSQL = "SELECT * FROM admin WHERE mobile_no='$Mobile'";
+$check = mysqli_fetch_array(mysqli_query($connect, $CheckSQL));
+
+if(isset($check)){
+echo 'Email Already Exist';
+}else{
+
+$Sql_Query = "INSERT INTO `admin`(`name`, `mobile_no`,`address`,  `password`) VALUES ('$Name','$Mobile','$Address','$password')";
+
+if(mysqli_query($connect, $Sql_Query)){
+echo 'Registration Completed Successfully';
+}else{
+echo 'Something Went Wrong';
+}
+}
+?>
+------------------------------------------------
+dustbinin
+
+<?php
+include 'conn.php';
+/*
+$Name = "1";
+$Address = "2";
+$Mobile = "3";
+$email = "4";
+$password = "5";
+$type = "6";
+*/
+$Id = $_POST['markid'];
+$Id1 = $_POST['id1'];
+//$Id2 = $_POST['id2'];
+//$Id3 = $_POST['id3'];
+//$Id4 = $_POST['id4'];
+//echo $Id1.$Id2.$Id3.$Id4;
+//echo $Name.$Address.$Mobile.$email.$password.$type;
+
+$Sql_Query = "INSERT INTO `dustbin_data_1`('$Id') VALUES ('$Id1')";
+
+if(mysqli_query($connect, $Sql_Query)){
+echo 'Registration Completed Successfully';
+}else{
+echo 'Something Went Wrong';
+}
+?>
+-------------------------------------------------
+userlist
+
+<?php
+
+include 'conn.php';
+
+$sql= "SELECT * FROM admin";
+
+//$fetchData=$q_result -> fetch_assoc();
+//else{
+//	$fetchData=array();
+//}
+$result = $connect->query($sql);
+ 
+if ($result->num_rows >0) {
+ 
+ 
+ while($row[] = $result->fetch_assoc()) {
+ 
+ $item = $row;
+ 
+ $json = json_encode($item);
+ 
+ }
+ 
+} else {
+ echo "No Data Found.";
+}
+ echo $json;
+$connect->close();
+?>
+-------------------------------------------------------
+distbinout
+
+<?php
+
+include 'conn.php';
+
+//if($q_result=$connect -> query("SELECT * FROM admin Where username='".$username."' and password='".$password."'"))
+$q_result=$connect -> query("SELECT * FROM `dustbin_data` ORDER BY id DESC LIMIT 1");
+
+//$fetchData=$q_result -> fetch_assoc();
+//else{
+//	$fetchData=array();
+//}
+$result=array();
+
+while ($fetchData=$q_result -> fetch_assoc()) {
+	$result[]=$fetchData;
+}
+
+echo json_encode($result);
+?>
+------------------------------------------------------------
+markersin
+
+<?php
+include 'conn.php';
+//$dbMarker = $_POST['dbMarker'];
+$markId = $_POST['markId'];
+$lat = $_POST['lat'];
+$long = $_POST['long'];
+$markid1 = $_POST['markid1'];
+//echo $Name.$Address.$Mobile.$email.$password.$type;
+
+$Sql_Query = "INSERT INTO `marker_data`(`markerId`,`Lat`,`Lan`,`extra`) VALUES ('$markId','$lat','$long','$markid1')";
+//$Sql_Query = "INSERT INTO `marker_data1`(`Marker`) VALUES ('$dbMarker')";
+if(mysqli_query($connect, $Sql_Query)){
+echo 'Registration Completed Successfully';
+}else{
+echo 'Something Went Wrong';
+}
+?>
+------------------------------------------------------------
+fetchmarker
+
+<?php
+
+include 'conn.php';
+
+//if($q_result=$connect -> query("SELECT * FROM admin Where username='".$username."' and password='".$password."'"))
+$q_result=$connect -> query("SELECT * FROM `marker_data`");
+
+//$fetchData=$q_result -> fetch_assoc();
+//else{
+//	$fetchData=array();
+//}
+$result=array();
+
+while ($fetchData=$q_result -> fetch_assoc()) {
+	$result[]=$fetchData;
+}
+
+echo json_encode($result);
+?>
+------------------------------------------------------------
+update
+
+<?php
+include 'conn.php';
+
+$Id = $_POST['id'];
+$chkcol = "SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = 'id12584282_truck' AND TABLE_NAME ='dustbin_data_1' AND COLUMN_NAME = '$Id'";
+$mycol = mysqli_fetch_array(mysqli_query($connect, $chkcol));
+//mysqli_query($connect, $mycol);
+if(!isset($mycol['$Id'])){
+  $result = "ALTER TABLE dustbin_data_1 ADD COLUMN $Id INT(5)";
+  mysqli_query($connect, $result);
+//$Sql_Query = "ALTER TABLE dustbin_data_1 ADD COLUMN $Id INT(5)";
+//$result = "SHOW COLUMNS FROM `table` LIKE '$Id'";
+//mysqli_query($connect, $result);
+//$exists = (mysql_num_rows($result))?TRUE:FALSE;
+//if($exists == "False"){
+  //  echo 'already exist';
+//}
+//if(mysqli_query($connect, $Sql_Query)){
+echo 'Registration Completed Successfully';
+}else{
+echo 'Something Went Wrong';
+}
+?>
